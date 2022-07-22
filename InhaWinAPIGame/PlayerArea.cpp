@@ -17,12 +17,11 @@ PlayerArea::PlayerArea( const Gdiplus::Rect& rect )
 	const int right = rect.GetRight();
 	const int bottom = rect.GetBottom();
 
-	polygon.vertices.emplace_back( left, top );
-	polygon.vertices.emplace_back( right, top );
-	polygon.vertices.emplace_back( right, bottom );
-	polygon.vertices.emplace_back( left, bottom );
+	//polygon.vertices.emplace_back( left, top );
+	//polygon.vertices.emplace_back( right, top );
+	//polygon.vertices.emplace_back( right, bottom );
+	//polygon.vertices.emplace_back( left, bottom );
 
-	drawVertices = polygon.vertices;
 }
 
 void PlayerArea::Update( float dt, Scene& scene )
@@ -37,9 +36,6 @@ void PlayerArea::Draw( Gdiplus::Graphics& gfx )
 
 void PlayerArea::MoveToRelativeCoord( const Vec2<int>& amount )
 {
-	drawVertices = polygon.vertices;
-	for (size_t i = 0; i < polygon.size(); ++i)
-	{
-		drawVertices[i] = polygon.vertices[i] + Gdiplus::Point( amount.x, amount.y );
-	}
+	drawVertices = ArshesSH::Polygon::ConvertToVectorOfPoint(polygon + amount);
+
 }

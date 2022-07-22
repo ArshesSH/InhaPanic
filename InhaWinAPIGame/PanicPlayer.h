@@ -10,11 +10,6 @@ class PanicPlayer : public Actor
 {
 
 public:
-	enum class MoveMode
-	{
-		Edge,
-		Inside
-	};
 
 public:
 	PanicPlayer( const Vec2<int> pos, int width, int height );
@@ -38,7 +33,6 @@ private:
 	const Vec2<int> dirUp = { 0,-1 };
 	const Vec2<int> dirRight = { 1, 0 };
 	const Vec2<int> dirDown = { 0, 1 };
-	Vec2<int> lastDir = noDir;
 
 	// Player status
 	Vec2<int> dir;
@@ -47,13 +41,7 @@ private:
 	float moveTime = 0.0f;
 
 	// Player Move Node Setting
-	MoveMode moveMode = MoveMode::Edge;
-	std::pair<int, int> curLineIndices = {0,1};
 	ArshesSH::Polygon trackingVertices;
-
-	bool isStartTracking = false;
-	std::pair<int, int> trackingStartIndices;
-	std::pair<int, int> trackingEndIndices;
 
 	// Player Drawing Setting
 	Vec2<int> sceneTopLeft;
