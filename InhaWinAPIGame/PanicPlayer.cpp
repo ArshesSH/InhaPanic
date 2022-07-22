@@ -38,27 +38,6 @@ void PanicPlayer::Draw( Gdiplus::Graphics& gfx )
 	Surface::DrawString( gfx, etcDebugStr, { 300, 20 }, Gdiplus::Color( 255, 255, 0, 255 ) );
 }
 
-
-void PanicPlayer::ControlPlayer(float dt, PlayerArea& area)
-{
-	if ( GetAsyncKeyState( VK_LEFT ) & 0x8001 )
-	{
-		MovePos( dt, dirLeft, area );
-	}
-	else if ( GetAsyncKeyState( VK_RIGHT ) & 0x8001 )
-	{
-		MovePos( dt, dirRight, area );
-	}
-	else if ( GetAsyncKeyState( VK_UP ) & 0x8001 )
-	{
-		MovePos( dt, dirUp, area );
-	}
-	else if ( GetAsyncKeyState( VK_DOWN ) & 0x8001 )
-	{
-		MovePos( dt, dirDown, area );
-	}
-}
-
 void PanicPlayer::MoveObjectToRelativeCoord( const Vec2<int> amount )
 {
 	relativeTopLeft = collisionRect.GetLeftTop() + amount;

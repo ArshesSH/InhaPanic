@@ -17,7 +17,7 @@ public:
 	void MoveToRelativeCoord( const Vec2<int>& amount );
 
 public:
-	ArshesSH::Polygon<Gdiplus::Point> polygon;
+	ArshesSH::Polygon polygon;
 
 private:
 	const Gdiplus::Color color{ 255, 0, 255, 0 };

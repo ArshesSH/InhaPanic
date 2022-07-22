@@ -21,7 +21,6 @@ public:
 
 	void Update( float dt, class Scene& scene ) override;
 	void Draw( Gdiplus::Graphics& gfx ) override;
-	void ControlPlayer( float dt, PlayerArea& area );
 
 private:
 	void MoveObjectToRelativeCoord( const Vec2<int> amount );
@@ -50,7 +49,7 @@ private:
 	// Player Move Node Setting
 	MoveMode moveMode = MoveMode::Edge;
 	std::pair<int, int> curLineIndices = {0,1};
-	ArshesSH::Polygon<Gdiplus::Point> trackingVertices;
+	ArshesSH::Polygon trackingVertices;
 
 	bool isStartTracking = false;
 	std::pair<int, int> trackingStartIndices;
