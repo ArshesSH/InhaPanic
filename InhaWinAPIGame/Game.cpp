@@ -37,7 +37,7 @@ void Game::ComposeFrame(HDC hdc)
 			drawManager.DrawMain( hdc, screenRect, isScreenChanged,
 				[this]( HDC hdc )
 				{
-					testTriangulationScene.Draw( hdc );
+					//testTriangulationScene.Draw( hdc );
 				}
 			);
 		}
@@ -68,7 +68,7 @@ void Game::UpdateModel()
 		{
 			float dt = ft.Mark();
 			RefreshScreen();
-			testTriangulationScene.Update(dt, *this);
+			//testTriangulationScene.Update(dt, *this);
 		}
 		break;
 	case Game::SceneType::SceneResult:

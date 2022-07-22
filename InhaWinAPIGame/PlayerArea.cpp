@@ -3,10 +3,9 @@
 #include <cassert>
 #include "Scene.h"
 
-PlayerArea::PlayerArea(const std::vector<Gdiplus::Point>& vertices)
+PlayerArea::PlayerArea(const std::vector<Vec2<int>>& vertices)
 	:
-	polygon(vertices),
-	drawVertices(vertices)
+	polygon(vertices)
 {
 }
 
@@ -17,10 +16,10 @@ PlayerArea::PlayerArea( const Gdiplus::Rect& rect )
 	const int right = rect.GetRight();
 	const int bottom = rect.GetBottom();
 
-	//polygon.vertices.emplace_back( left, top );
-	//polygon.vertices.emplace_back( right, top );
-	//polygon.vertices.emplace_back( right, bottom );
-	//polygon.vertices.emplace_back( left, bottom );
+	polygon.push_back( left, top );
+	polygon.push_back( right, top );
+	polygon.push_back( right, bottom );
+	polygon.push_back( left, bottom );
 
 }
 

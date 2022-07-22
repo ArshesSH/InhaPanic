@@ -9,7 +9,7 @@
 class PlayerArea : public Actor
 {
 public:
-	PlayerArea( const std::vector<Gdiplus::Point>& vertices );
+	PlayerArea( const std::vector<Vec2<int>>& vertices );
 	PlayerArea( const Gdiplus::Rect& rect );
 
 	void Update( float dt, class Scene& scene ) override;

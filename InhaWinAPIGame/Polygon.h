@@ -30,6 +30,7 @@ namespace ArshesSH
 			{
 				points[i] = conversion( src[i] );
 			}
+			return points;
 		}
 	};
 
@@ -67,10 +68,39 @@ namespace ArshesSH
 			return conversion( src.vertices );
 		}
 
+		void push_back( const Vec2<int>& pos )
+		{
+			vertices.push_back( pos );
+		}
+		void push_back( int x, int y )
+		{
+			vertices.emplace_back( x, y );
+		}
 		size_t size() const
 		{
 			return vertices.size();
 		}
+
+		std::pair<int, int> GetCurIndex( const Vec2<int>& pos )
+		{
+			for ( int i = 0; i < (int)vertices.size(); ++i )
+			{
+				if ( IsOnLine( pos, i, GetSafeIndex( i + 1 ) ) )
+				{
+					return { i, i + 1 };
+				}
+			}
+			return { -1, -1 };
+		}
+		std::pair<Vec2<int>, Vec2<int>> GetCurLineVertices( int startIdx, int endIdx )
+		{
+			return { vertices[startIdx], vertices[endIdx] };
+		}
+		Vec2<int> GetCurLineVec2( int startIdx, int endIdx )
+		{
+			return vertices[endIdx] - vertices[startIdx];
+		}
+
 		int GetSafeIndex(int i) const
 		{
 			if ( i >= (int)vertices.size() )
@@ -112,6 +142,33 @@ namespace ArshesSH
 		}
 		bool IsOnLine( const Vec2<int>& pos, int startIdx, int endIdx )
 		{
+			if ( IsHorizontal( startIdx, endIdx ) )
+			{
+				const int minX = (std::min)(vertices[startIdx].x, vertices[endIdx].x);
+				const int maxX = (std::max)(vertices[startIdx].x, vertices[endIdx].x);
+
+				return pos.x >= minX &&
+					pos.x <= maxX &&
+					pos.y == vertices[startIdx].y;
+			}
+			else if ( IsVertical( startIdx, endIdx ) )
+			{
+				const int minY = (std::min)(vertices[startIdx].y, vertices[endIdx].y);
+				const int maxY = (std::max)(vertices[startIdx].y, vertices[endIdx].y);
+
+				return pos.x >= minY &&
+					pos.x <= maxY &&
+					pos.y == vertices[startIdx].x;
+			}
+			return false;
+		}
+		bool IsOnFirstVertex( const Vec2<int>& pos, int startIdx )
+		{
+			return pos == vertices[startIdx];
+		}
+		bool IsOnSecondVertex( const Vec2<int>& pos, int endIdx )
+		{
+			return pos == vertices[endIdx];
 		}
 
 	private:

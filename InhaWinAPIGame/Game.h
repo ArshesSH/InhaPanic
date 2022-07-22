@@ -7,7 +7,7 @@
 #include "DrawManager.h"
 
 // Test Things
-#include "TestTriangulationScene.h"
+//#include "TestTriangulationScene.h"
 
 class Game
 {
@@ -48,5 +48,5 @@ private:
 
 
 	// for Test
-	TestTriangulationScene testTriangulationScene;
+	//TestTriangulationScene testTriangulationScene;
 };
