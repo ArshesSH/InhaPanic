@@ -21,6 +21,7 @@ PlayerArea::PlayerArea( const Gdiplus::Rect& rect )
 	polygon.push_back( right, bottom );
 	polygon.push_back( left, bottom );
 
+	drawVertices = ArshesSH::Polygon::ConvertToVectorOfPoint( polygon );
 }
 
 void PlayerArea::Update( float dt, Scene& scene )
