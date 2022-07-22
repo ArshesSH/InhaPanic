@@ -115,7 +115,6 @@ void PanicPlayer::MovePos( float dt, const Vec2<int>& dir, PlayerArea& area )
 					5. If Get Two lines, Find next pos is in two lines
 					6. If So, Move
 					*/
-
 				//for Debug
 				curVertices = curLine;
 

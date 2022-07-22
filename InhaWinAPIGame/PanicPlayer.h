@@ -35,7 +35,7 @@ private:
 			if ( !isStartTracking )
 			{
 				if ( area.polygon.IsOnEdge( curPos, curLine ) &&
-					area.polygon.IsOnInside( dir, curLine ) )
+					area.polygon.IsDirInside( dir, curLine ) )
 				{
 					isStartTracking = true;
 					moveMode = MoveMode::Inside;

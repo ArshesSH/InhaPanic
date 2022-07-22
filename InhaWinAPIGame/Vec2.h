@@ -80,7 +80,7 @@ public:
 
 	T GetLength() const
 	{
-		return std::sqrt( GetLengthSq() );
+		return (T)std::sqrt( GetLengthSq() );
 	}
 
 	T GetLengthSq() const
@@ -98,16 +98,16 @@ public:
 		const T len = GetLength();
 		if ( len != (T)0 )
 		{
-			return *this * ((T)1 / len);
+			return *this / len;
 		}
 		return *this;
 	}
 
-	Vec2 GetNormalRightVec2() const
+	Vec2 GetNormalLeftVec2() const
 	{
 		return { y, -x };
 	}
-	Vec2 GetNormalLeftVec2() const
+	Vec2 GetNormalRightVec2() const
 	{
 		return { -y, x };
 	}

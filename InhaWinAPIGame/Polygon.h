@@ -163,7 +163,7 @@ namespace ArshesSH
 		template <typename V2>
 		bool IsOnPath( const V2& pos ) const
 		{
-			for ( int i = 1; i < vertices.size(); ++i )
+			for ( int i = 1; i < (int)vertices.size(); ++i )
 			{
 				const auto curLine = GetLineFromIndices( { GetSafeIndex( i - 1 ), GetSafeIndex( i ) } );
 
@@ -175,41 +175,29 @@ namespace ArshesSH
 			return false;
 		}
 
-		bool IsOnInside( const Vec2<int>& pos, const std::pair<V, V>& curLine )
+		bool IsDirInside( const Vec2<int>& dir, const std::pair<V, V>& curLine )
 		{
-			// Check Vectors dir
-			// Check Point is on right side of vector
 			const int x = (curLine.second.X - curLine.first.X);
 			const int y = (curLine.second.Y - curLine.first.Y);
 			const Vec2<int> line = { x, y };
-			const auto crossed = Vec2<int>::GetCrossProduct( line, pos );
-			if ( crossed > 0 )
-			{
-				return true;
-			}
-			return false;
+			const Vec2<int> rightNormal = line.GetNormalRightVec2().GetNormalized();
+			
+			return dir == rightNormal;
 		}
-		bool IsOnOutside( const Vec2<int>& pos, std::pair<V, V>& curLine )
+
+		bool IsDirOutside( const Vec2<int>& dir, std::pair<V, V>& curLine )
 		{
 			const Vec2<int> line = { curLine.second.X - curLine.first.X, curLine.second.Y - curLine.first.Y };
-			const auto crossed = Vec2<int>::GetCrossProduct( line, pos );
-			if ( crossed < 0 )
-			{
-				return true;
-			}
-			return false;
-		}
-		bool IsOnOutside( const Vec2<int>& pos )
-		{
-			for ( int i = 1; i < vertices.size(); ++i )
-			{
-				const auto curLine = GetLineFromIndices( { GetSafeIndex( i - 1 ), GetSafeIndex( i ) } );
-				if ( IsOnOutside( pos, curLine ) )
-				{
-					return true;
-				}
-			}
-			return false;
+			const Vec2<int> leftNormal = line.GetNormalLeftVec2().GetNormalized();
+
+			return dir == leftNormal;
+
+			//const auto crossed = Vec2<int>::GetCrossProduct( line, pos );
+			//if ( crossed < 0 )
+			//{
+			//	return true;
+			//}
+			//return false;
 		}
 
 		auto size() const
