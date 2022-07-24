@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "Rect.h"
+
 #include "PlayerArea.h"
 
 class PanicPlayer : public Actor
@@ -14,11 +15,41 @@ public:
 public:
 	PanicPlayer( const Vec2<int> pos, int width, int height );
 
-	void Update( float dt, class Scene& scene ) override;
+	void Update( float dt, class SceneStage& stage );
 	void Draw( Gdiplus::Graphics& gfx ) override;
 
 private:
 	void MoveObjectToRelativeCoord( const Vec2<int> amount );
+	void Move(float dt, const Vec2<int>& dir)
+	{
+		moveTime += dt;
+		if ( moveTime >= movePeriod )
+		{
+			collisionRect.SetCenter( collisionRect.GetCenter() + dir * speed );
+			moveTime = 0.0f;
+		}
+	}
+	void MoveByKbdInput(float dt)
+	{
+		if ( GetAsyncKeyState( VK_LEFT ) & 0x8001 )
+		{
+			Move( dt, dirLeft );
+		}
+		else if ( GetAsyncKeyState( VK_RIGHT ) & 0x8001  )
+		{
+			Move( dt, dirRight );
+		}
+		else if ( GetAsyncKeyState( VK_UP ) & 0x8001  )
+		{
+			Move( dt, dirUp );
+		}
+		else if ( GetAsyncKeyState( VK_DOWN ) & 0x8001 )
+		{
+			Move( dt, dirDown );
+		}
+	}
+	
+
 	
 private:
 	// Image Setting
@@ -35,7 +66,7 @@ private:
 	const Vec2<int> dirDown = { 0, 1 };
 
 	// Player status
-	Vec2<int> dir;
+	Vec2<int> lastDir = noDir;
 	int speed = 2;
 	Rect<int> collisionRect;
 	float moveTime = 0.0f;
@@ -49,5 +80,6 @@ private:
 	Vec2<int> relativeBottomRight;
 
 	//Debug
-	std::pair<Gdiplus::Point, Gdiplus::Point> curVertices;
+	int debugVal = 0;
+	Vec2<float> debugPos;
 };

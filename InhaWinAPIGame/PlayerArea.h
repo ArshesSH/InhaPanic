@@ -12,7 +12,7 @@ public:
 	PlayerArea( const std::vector<Vec2<int>>& vertices );
 	PlayerArea( const Gdiplus::Rect& rect );
 
-	void Update( float dt, class Scene& scene ) override;
+	void Update( float dt, class Scene& scene );
 	void Draw( Gdiplus::Graphics& gfx )override;
 	void MoveToRelativeCoord( const Vec2<int>& amount );
 

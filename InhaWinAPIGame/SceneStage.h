@@ -12,8 +12,13 @@ class SceneStage : public Scene
 public:
 	SceneStage();
 	
-	void Update( float dt, class Game& game ) override;
+	void Update( float dt, class Game& game );
 	void Draw( HDC hdc ) override;
+
+	PlayerArea GetPlayerArea() const
+	{
+		return playerArea;
+	}
 
 private:
 	static constexpr float worldWidth = 400.0f;

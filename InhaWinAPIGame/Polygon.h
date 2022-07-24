@@ -171,21 +171,21 @@ namespace ArshesSH
 		{
 			return pos == vertices[endIdx];
 		}
-		bool IsInside( const Vec2<int>& pos, const Vec2<int>& rayStartPos = {0,0} ) const
+		bool IsHas( const Vec2<int>& pos, const Vec2<int>& rayStartPos = {0,0} ) const
 		{
-			bool isInside = false;
-			Ray<int> ray( rayStartPos );
-			ray.ToPoint( pos );
+			Ray<float> ray( (Vec2<float>)pos );
+			//ray.ToPoint( (Vec2<float>)pos );
 
+			bool isIn = false;
 			for ( int i = 0; i < (int)vertices.size(); ++i )
 			{
 				const auto pairVertices = GetCurLineVertices( GetSafeIndex( i ), GetSafeIndex( i + 1 ) );
-				if ( ray.CastToLine( pairVertices.first, pairVertices.second ) )
+				if ( ray.CastToLine( (Vec2<float>)pairVertices.first, (Vec2<float>)pairVertices.second ) )
 				{
-					isInside = !isInside;
+					isIn = !isIn;
 				}
 			}
-			return isInside;
+			return isIn;
 		}
 
 		int GetCrossingNumberCount( const Vec2<int>& pos ) const
