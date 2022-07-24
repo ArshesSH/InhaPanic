@@ -167,6 +167,7 @@
     <ClInclude Include="PhysicsEntityTypeTraits.h" />
     <ClInclude Include="PlayerArea.h" />
     <ClInclude Include="Polygon.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />

@@ -6,6 +6,7 @@
 #include "Vec2.h"
 #include "Surface.h"
 #include "IndexedLineList.h"
+#include "Ray.h"
 
 namespace ArshesSH
 {
@@ -41,7 +42,7 @@ namespace ArshesSH
 		Polygon() {}
 		Polygon( const std::vector<Vec2<int>>& vertices )
 			:
-			vertices(vertices)
+			vertices( vertices )
 		{
 		}
 
@@ -81,7 +82,7 @@ namespace ArshesSH
 			return vertices.size();
 		}
 
-		std::pair<int, int> GetCurIndex( const Vec2<int>& pos )
+		std::pair<int, int> GetCurIndex( const Vec2<int>& pos ) const
 		{
 			for ( int i = 0; i < (int)vertices.size(); ++i )
 			{
@@ -92,16 +93,16 @@ namespace ArshesSH
 			}
 			return { -1, -1 };
 		}
-		std::pair<Vec2<int>, Vec2<int>> GetCurLineVertices( int startIdx, int endIdx )
+		std::pair<Vec2<int>, Vec2<int>> GetCurLineVertices( int startIdx, int endIdx ) const
 		{
 			return { vertices[startIdx], vertices[endIdx] };
 		}
-		Vec2<int> GetCurLineVec2( int startIdx, int endIdx )
+		Vec2<int> GetCurLineVec2( int startIdx, int endIdx ) const
 		{
 			return vertices[endIdx] - vertices[startIdx];
 		}
 
-		int GetSafeIndex(int i) const
+		int GetSafeIndex( int i ) const
 		{
 			if ( i >= (int)vertices.size() )
 			{
@@ -113,7 +114,7 @@ namespace ArshesSH
 			}
 			return i;
 		}
-		bool IsHorizontal(const Vec2<int>& lineStart, const Vec2<int>& lineEnd) const
+		bool IsHorizontal( const Vec2<int>& lineStart, const Vec2<int>& lineEnd ) const
 		{
 			return (lineStart.y == lineEnd.y);
 		}
@@ -129,7 +130,7 @@ namespace ArshesSH
 		{
 			return vertices[startIdx].x == vertices[endIdx].x;
 		}
-		bool IsOnAnyVertex(const Vec2<int>& pos) const
+		bool IsOnAnyVertex( const Vec2<int>& pos ) const
 		{
 			for ( const auto& v : vertices )
 			{
@@ -140,7 +141,7 @@ namespace ArshesSH
 			}
 			return false;
 		}
-		bool IsOnLine( const Vec2<int>& pos, int startIdx, int endIdx )
+		bool IsOnLine( const Vec2<int>& pos, int startIdx, int endIdx ) const
 		{
 			if ( IsHorizontal( startIdx, endIdx ) )
 			{
@@ -162,13 +163,35 @@ namespace ArshesSH
 			}
 			return false;
 		}
-		bool IsOnFirstVertex( const Vec2<int>& pos, int startIdx )
+		bool IsOnFirstVertex( const Vec2<int>& pos, int startIdx ) const
 		{
 			return pos == vertices[startIdx];
 		}
-		bool IsOnSecondVertex( const Vec2<int>& pos, int endIdx )
+		bool IsOnSecondVertex( const Vec2<int>& pos, int endIdx ) const
 		{
 			return pos == vertices[endIdx];
+		}
+		bool IsInside( const Vec2<int>& pos, const Vec2<int>& rayStartPos = {0,0} ) const
+		{
+			bool isInside = false;
+			Ray<int> ray( rayStartPos );
+			ray.ToPoint( pos );
+
+			for ( int i = 0; i < (int)vertices.size(); ++i )
+			{
+				const auto pairVertices = GetCurLineVertices( GetSafeIndex( i ), GetSafeIndex( i + 1 ) );
+				if ( ray.CastToLine( pairVertices.first, pairVertices.second ) )
+				{
+					isInside = !isInside;
+				}
+			}
+			return isInside;
+		}
+
+		int GetCrossingNumberCount( const Vec2<int>& pos ) const
+		{
+			int cnt = 0;
+
 		}
 
 	private:
