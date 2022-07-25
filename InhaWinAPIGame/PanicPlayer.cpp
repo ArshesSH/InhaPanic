@@ -12,8 +12,12 @@ PanicPlayer::PanicPlayer( const Vec2<int> pos, int width, int height )
 
 void PanicPlayer::Update( float dt, SceneStage& stage )
 {
-	MoveByKbdInput(dt);
-	TestInside( stage.GetPlayerArea() );
+	if ( state == MoveState::MoveOnEdge )
+	{
+		startPos = collisionRect.GetCenter();
+	}
+
+	KbdInput();
 	
 	sceneTopLeft = stage.GetSceneTopLeft();
 	MoveObjectToRelativeCoord( sceneTopLeft );

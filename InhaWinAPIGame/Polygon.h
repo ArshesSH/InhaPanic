@@ -174,8 +174,6 @@ namespace ArshesSH
 		bool IsHas( const Vec2<int>& pos, const Vec2<int>& rayStartPos = {0,0} ) const
 		{
 			Ray<float> ray( (Vec2<float>)pos );
-			//ray.ToPoint( (Vec2<float>)pos );
-
 			bool isIn = false;
 			for ( int i = 0; i < (int)vertices.size(); ++i )
 			{
@@ -186,12 +184,6 @@ namespace ArshesSH
 				}
 			}
 			return isIn;
-		}
-
-		int GetCrossingNumberCount( const Vec2<int>& pos ) const
-		{
-			int cnt = 0;
-
 		}
 
 	private:
