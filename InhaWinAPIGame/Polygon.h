@@ -82,7 +82,7 @@ namespace ArshesSH
 			return vertices.size();
 		}
 
-		std::pair<int, int> GetCurIndex( const Vec2<int>& pos ) const
+		std::pair<int, int> GetIndex( const Vec2<int>& pos ) const
 		{
 			for ( int i = 0; i < (int)vertices.size(); ++i )
 			{
@@ -93,11 +93,11 @@ namespace ArshesSH
 			}
 			return { -1, -1 };
 		}
-		std::pair<Vec2<int>, Vec2<int>> GetCurLineVertices( int startIdx, int endIdx ) const
+		std::pair<Vec2<int>, Vec2<int>> GetLineVertices( int startIdx, int endIdx ) const
 		{
 			return { vertices[startIdx], vertices[endIdx] };
 		}
-		Vec2<int> GetCurLineVec2( int startIdx, int endIdx ) const
+		Vec2<int> GetLineVec2( int startIdx, int endIdx ) const
 		{
 			return vertices[endIdx] - vertices[startIdx];
 		}
@@ -177,13 +177,17 @@ namespace ArshesSH
 			bool isIn = false;
 			for ( int i = 0; i < (int)vertices.size(); ++i )
 			{
-				const auto pairVertices = GetCurLineVertices( GetSafeIndex( i ), GetSafeIndex( i + 1 ) );
+				const auto pairVertices = GetLineVertices( GetSafeIndex( i ), GetSafeIndex( i + 1 ) );
 				if ( ray.CastToLine( (Vec2<float>)pairVertices.first, (Vec2<float>)pairVertices.second ) )
 				{
 					isIn = !isIn;
 				}
 			}
 			return isIn;
+		}
+		std::pair<int, int> GetFactoredIndices( const std::pair<int, int>& indices, int factor )
+		{
+			return { GetSafeIndex( indices.first + factor ), GetSafeIndex( indices.second + factor ) };
 		}
 
 	private:

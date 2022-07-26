@@ -85,11 +85,51 @@ private:
 	
 	void RideEdge( float dt, PlayerArea& area )
 	{
+		// Move only at line
 		const Vec2<int> nextPos = curDir + collisionRect.GetCenter();
-		if ( area.polygon.IsOnLine( nextPos, 0, 1 ) )
+
+		if ( area.polygon.IsOnFirstVertex( nextPos, indices.first ) )
+		{
+			auto prevLineIndices = area.polygon.GetFactoredIndices( indices, -1 );
+			
+			if ( area.polygon.IsOnLine( nextPos, indices.first, indices.second ) )
+			{
+				Move( dt );
+			}
+			else if ( area.polygon.IsOnLine(nextPos,prevLineIndices.first, prevLineIndices.second ) )
+			{
+				Move( dt );
+				indices = prevLineIndices;
+			}
+		}
+		else if ( area.polygon.IsOnSecondVertex( nextPos, indices.second ) )
+		{
+			auto nextLineIndices = area.polygon.GetFactoredIndices( indices, 1 );
+
+			if ( area.polygon.IsOnLine( nextPos, indices.first, indices.second ) )
+			{
+				Move( dt );
+			}
+			else if ( area.polygon.IsOnLine( nextPos, nextLineIndices.first, nextLineIndices.second ) )
+			{
+				Move( dt );
+				indices = nextLineIndices;
+			}
+		}
+		else if ( area.polygon.IsOnLine( nextPos, indices.first, indices.second ) )
 		{
 			Move( dt );
 		}
+
+		//// Change indices at vertices on line
+		//if ( area.polygon.IsOnFirstVertex( nextPos, indices.first ) )
+		//{
+		//	indices = area.polygon.ChangeIndices( indices, -1 );
+		//}
+		//else if ( area.polygon.IsOnSecondVertex( nextPos, indices.second ) )
+		//{
+		//	indices = area.polygon.ChangeIndices( indices, 1 );
+		//}
 	}
 
 	
