@@ -24,6 +24,17 @@ public:
 	void Update( float dt, class SceneStage& stage );
 	void Draw( Gdiplus::Graphics& gfx ) override;
 
+	void ControlPlayer( float dt, PlayerArea& area )
+	{
+		if ( state == MoveState::MoveOnEdge )
+		{
+			startPos = collisionRect.GetCenter();
+		}
+
+		KbdInput();
+		RideEdge( dt, area );
+	}
+
 private:
 	void MoveObjectToRelativeCoord( const Vec2<int> amount );
 	void Move(float dt)
@@ -72,12 +83,12 @@ private:
 		}
 	}
 	
-	void RideEdge( PlayerArea& area )
+	void RideEdge( float dt, PlayerArea& area )
 	{
 		const Vec2<int> nextPos = curDir + collisionRect.GetCenter();
 		if ( area.polygon.IsOnLine( nextPos, 0, 1 ) )
 		{
-
+			Move( dt );
 		}
 	}
 
